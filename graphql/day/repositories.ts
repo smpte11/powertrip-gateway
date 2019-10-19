@@ -22,8 +22,8 @@ export class WeatherRepository extends AsyncRepository<Weather> {
 }
 
 type Day = {
-  date: Date,
-  activities: number[]
-}
+  date: Date;
+  activities: number[];
+};
 
-export class DayRepository extends AsyncRepository<Day> { }
+export class DayRepository extends AsyncRepository<Day> {}

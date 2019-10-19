@@ -28,7 +28,7 @@ class Config implements Configurable {
   }
 
   public get dayServiceUrl(): string {
-    return `${this.host}/8081`
+    return `${this.host}/8081`;
   }
 
   public get mocks() {
@@ -36,7 +36,7 @@ class Config implements Configurable {
   }
 }
 
-class ProdConfig extends Config { }
+class ProdConfig extends Config {}
 
 function buildConfig(): Config {
   const env = process.env.NODE_ENV;

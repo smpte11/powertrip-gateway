@@ -13,19 +13,25 @@ class DayResolver {
   @Inject("config")
   private readonly config!: Configurable;
 
-  @Field({ description: "Scheduled day's date on the calendar. Usefull to get temporal data of the trip." })
+  @Field({
+    description:
+      "Scheduled day's date on the calendar. Usefull to get temporal data of the trip."
+  })
   date!: Date;
 
-  @Field(() => [Number], { nullable: true, description: "Scheduled activities for the day." })
+  @Field(() => [Number], {
+    nullable: true,
+    description: "Scheduled activities for the day."
+  })
   activities?: number[];
 
   @Query(returns => Day)
   async day() {
     const dayRepository = new DayRepository(
-      new rm.RestClient('day-resolver', this.config.dayServiceUrl),
-      { resource: 'day' }
-    )
-    const day = await dayRepository.findOne(1)
+      new rm.RestClient("day-resolver", this.config.dayServiceUrl),
+      { resource: "day" }
+    );
+    const day = await dayRepository.findOne(1);
     return day;
   }
 

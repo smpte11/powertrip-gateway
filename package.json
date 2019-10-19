@@ -11,9 +11,27 @@
     "build:production": "npm run prestart && npm prune --production",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "apollo-server": "^2.9.6",
+    "apollo-server-azure-functions": "^2.9.6",
+    "casual": "^1.6.2",
+    "dotenv": "^8.2.0",
+    "graphql": "^14.5.8",
+    "reflect-metadata": "^0.1.13",
+    "regenerator-runtime": "^0.13.3",
+    "type-graphql": "^0.17.5",
+    "typed-rest-client": "^1.5.0",
+    "typedi": "^0.8.0"
+  },
   "devDependencies": {
     "@azure/functions": "^1.0.3",
+    "@playlyfe/gql": "^2.6.2",
+    "@types/graphql": "^14.5.0",
+    "@types/jest": "^24.0.19",
+    "@types/node": "^12.11.1",
+    "jest": "^24.9.0",
+    "source-map-support": "^0.5.13",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   }
 }

@@ -1,4 +1,4 @@
-import * as rm from "typed-rest-client/RestClient";
+import * as rm from "typed-rest-client";
 
 interface Findable<T> {
   findAll(): Promise<T[] | null>;
@@ -43,7 +43,9 @@ export abstract class AsyncRepository<T> implements Findable<T> {
   }
 
   async findById(id: number): Promise<T | null> {
-    const response: rm.IRestResponse<T> = await this.client.get<T>(`${this.resource}/${id}`)
+    const response: rm.IRestResponse<T> = await this.client.get<T>(
+      `${this.resource}/${id}`
+    );
     return response.result;
   }
   findOne(predicate: {}): T {
