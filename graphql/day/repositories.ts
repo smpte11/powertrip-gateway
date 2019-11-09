@@ -10,14 +10,11 @@ type DarkSkyResponse = {
 };
 
 export class WeatherRepository extends AsyncRepository<Weather> {
-  async findWeather(
-    lat: number,
-    long: number
-  ): Promise<DarkSkyResponse | null> {
-    const response = await this.client.get<DarkSkyResponse>(
-      `/api/${this.resource}?lat=${lat}&long=${long}`
+  async findWeather(lat: number, long: number): Promise<DarkSkyResponse> {
+    const { result } = await this.client.get(
+      `/${this.resource}?lat=${lat}&long=${long}`
     );
-    return response.result;
+    return result;
   }
 }
 

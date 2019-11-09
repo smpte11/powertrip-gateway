@@ -21,10 +21,16 @@ class Day {
     description: "The current date.",
     nullable: true
   })
-  date!: Date;
+  date: Date;
 
-  @Field(type => Weather, { defaultValue: null, nullable: true })
-  weather?: Weather;
+  @Field(type => [Number], {
+    description: "A list of activities for a given day",
+    nullable: true
+  })
+  activities: number[];
+
+  // @Field(type => Weather, { defaultValue: null, nullable: true })
+  // weather?: Weather;
 }
 
 export default Day;

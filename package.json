@@ -9,11 +9,11 @@
     "start:host": "func start",
     "start": "npm run start:host & npm run watch",
     "build:production": "npm run prestart && npm prune --production",
-    "test": "echo \"No tests yet...\""
+    "test": "jest"
   },
   "dependencies": {
-    "apollo-server": "^2.9.6",
-    "apollo-server-azure-functions": "^2.9.6",
+    "apollo-server": "^2.9.9",
+    "apollo-server-azure-functions": "^2.9.9",
     "casual": "^1.6.2",
     "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
@@ -26,12 +26,14 @@
   "devDependencies": {
     "@azure/functions": "^1.0.3",
     "@playlyfe/gql": "^2.6.2",
+    "@types/got": "^9.6.9",
     "@types/graphql": "^14.5.0",
-    "@types/jest": "^24.0.19",
-    "@types/node": "^12.11.1",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.8",
     "jest": "^24.9.0",
-    "source-map-support": "^0.5.13",
+    "nock": "^11.7.0",
+    "source-map-support": "^0.5.16",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   }
 }

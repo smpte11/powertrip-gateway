@@ -1,24 +1,23 @@
+import nock from "nock";
 import { AsyncRepository } from "./repositories";
 
-describe("Repositories", () => {
+describe("Async repository", () => {
   interface Test {}
-  class Client {
-    get = jest.fn().mockResolvedValue({});
-  }
   class TestRepository extends AsyncRepository<Test> {}
-  const client = new Client();
-  const repository = new TestRepository(client, {
-    baseUrl: "http://localhost",
-    userAgent: "test-repository",
-    resource: "test"
-  });
+  const baseUrl = "http://api.test.com";
+  const repository = new TestRepository({ baseUrl, resource: "tests" });
 
-  it("should initialize correctly", async () => {
+  it("should initialize correctly", () => {
     expect(repository).toBeDefined();
   });
 
-  test("should call the provided client", async () => {
-    await repository.findAll();
-    expect(client.get).toHaveBeenCalledWith("test");
+  it("should find a resource by id", async () => {
+    nock("http://api.test.com")
+      .get("/tests/1")
+      .reply(200, {});
+
+    const response = await repository.findById(1);
+
+    expect(response).toEqual({});
   });
 });

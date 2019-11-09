@@ -1,8 +1,8 @@
-import * as rm from "typed-rest-client";
+import * as rm from "typed-rest-client/RestClient";
 
 interface Findable<T> {
   findAll(): Promise<T[] | null>;
-  findById(id: number): Promise<T | null>;
+  findById(id: number): Promise<T>;
   findOne(predicate: {}): T;
 }
 
@@ -20,35 +20,33 @@ interface Deletable {
 
 type AsyncRepositoryOpts = {
   resource: string;
-  baseUrl?: string;
-  userAgent?: string;
+  baseUrl: string;
 };
 
 export abstract class AsyncRepository<T> implements Findable<T> {
   protected resource: string;
   protected client: rm.RestClient;
 
-  constructor(client: any, options: AsyncRepositoryOpts) {
-    const { resource } = options;
-    if (!resource) throw new Error("Resource option mandatory");
+  constructor(options: AsyncRepositoryOpts) {
+    const { baseUrl, resource } = options;
+    this.client = new rm.RestClient("powertrip-gateway", baseUrl);
     this.resource = resource;
-    this.client = client;
   }
 
-  async findAll(): Promise<T[] | null> {
-    const response: rm.IRestResponse<T[]> = await this.client.get<T[]>(
-      this.resource
-    );
-    return response.result;
+  async findById(id: number) {
+    try {
+      const { result } = await this.client.get<T>(`${this.resource}/${id}`);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async findById(id: number): Promise<T | null> {
-    const response: rm.IRestResponse<T> = await this.client.get<T>(
-      `${this.resource}/${id}`
-    );
-    return response.result;
-  }
   findOne(predicate: {}): T {
+    throw new Error("Method not implemented.");
+  }
+
+  findAll(): Promise<T[]> {
     throw new Error("Method not implemented.");
   }
 }
