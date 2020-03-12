@@ -23,7 +23,7 @@ class Config implements Configurable {
   }
 
   public get dayServiceUrl(): string {
-    return `${this.host}:8082`;
+    return "http://day.trip/api/v1";
   }
 
   public get mocks() {
@@ -36,7 +36,10 @@ class ProdConfig extends Config {}
 function buildConfig(): Config {
   const env = process.env.NODE_ENV;
   return match(env)
-    .on(() => env === ENVIRONMENTS.PROD, () => new ProdConfig())
+    .on(
+      () => env === ENVIRONMENTS.PROD,
+      () => new ProdConfig()
+    )
     .otherwise(() => new Config());
 }
 

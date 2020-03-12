@@ -19,9 +19,9 @@ const schema = buildSchemaSync({
 const server = new ApolloServer({
   //@ts-ignore
   schema,
-  playground: true,
-  mocks: (Container.get("config") as Configurable).mocks,
-  mockEntireSchema: false
+  playground: true
+  // mocks: (Container.get("config") as Configurable).mocks,
+  // mockEntireSchema: false
 });
 
 export default server.createHandler({});
