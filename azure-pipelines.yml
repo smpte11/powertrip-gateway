@@ -12,23 +12,23 @@ variables:
   azureSubscription: 'd686d23e-1ecc-44c3-983d-7799b4aab06b'
 
   # Function app name
-  functionAppName: ''
- 
+  functionAppName: 'powertrip-api-gateway'
+
   # Environment name
-  environmentName: ''
- 
+  environmentName: 'gateway-prod'
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
   displayName: Build stage
-  jobs:  
+  jobs:
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-      
+
     steps:
     - task: NodeTool@0
       inputs:
@@ -45,9 +45,10 @@ stages:
     - script: |
         npm install
         npm run build --if-present
-        npm run test --if-present
       displayName: 'Prepare binaries'
-      
+
+    - script: ls -la
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
@@ -57,7 +58,7 @@ stages:
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         replaceExistingArchive: true
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
 
 - stage: Deploy
@@ -68,12 +69,12 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     environment: $(environmentName)
-    pool: 
+    pool:
       vmImage: $(vmImageName)
     strategy:
       runOnce:
         deploy:
-          steps:            
+          steps:
           - task: AzureFunctionApp@1
             displayName: 'Azure Functions App Deploy: '
             inputs:

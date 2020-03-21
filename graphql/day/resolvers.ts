@@ -9,16 +9,26 @@ import { WeatherRepository, DayRepository } from "./repositories";
 @Service()
 @Resolver(of => Day)
 class DayResolver {
-  @Inject("config")
   private readonly config!: Configurable;
+
+  dayRepository: DayRepository;
+  weatherRepository: WeatherRepository;
+
+  constructor(@Inject("config") config: Configurable) {
+    this.dayRepository = new DayRepository({
+      baseUrl: config.dayServiceUrl,
+      resource: "days"
+    });
+
+    this.weatherRepository = new WeatherRepository({
+      baseUrl: config.weatherChannelUrl,
+      resource: "api/powertrip-weather-channel"
+    });
+  }
 
   @Query(_ => Day)
   async day() {
-    const dayRepository = new DayRepository({
-      baseUrl: this.config.dayServiceUrl,
-      resource: "days"
-    });
-    const response = await dayRepository.findById(1);
+    const response = await this.dayRepository.findById(1);
     return response;
   }
 
@@ -27,12 +37,7 @@ class DayResolver {
     @Arg("lat", { defaultValue: 59.3293 }) lat: number,
     @Arg("long", { defaultValue: 18.0686 }) long: number
   ): Promise<Weather | null> {
-    const weatherRepository = new WeatherRepository({
-      baseUrl: this.config.weatherChannelUrl,
-      resource: "api/powertrip-weather-channel"
-    });
-
-    const currentWeather = await weatherRepository.findWeather(lat, long);
+    const currentWeather = await this.weatherRepository.findWeather(lat, long);
     if (!currentWeather) return { icon: "", summary: "" };
     return currentWeather.currently;
   }

@@ -1,4 +1,4 @@
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType, Field, Int } from "type-graphql";
 
 @ObjectType({
   description: "Weather for a given day. Info provided by DarkSky."
@@ -21,16 +21,13 @@ class Day {
     description: "The current date.",
     nullable: true
   })
-  date: Date;
+  date?: Date;
 
-  @Field(type => [Number], {
-    description: "A list of activities for a given day",
+  @Field(type => [Int], {
+    description: "A list of activities for a given day.",
     nullable: true
   })
-  activities: number[];
-
-  // @Field(type => Weather, { defaultValue: null, nullable: true })
-  // weather?: Weather;
+  activities?: number[];
 }
 
 export default Day;

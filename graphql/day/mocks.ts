@@ -1,4 +1,5 @@
 import casual from "casual";
+import { MockList } from "graphql-tools";
 
 const ICONS = [
   "clear-day",
@@ -20,6 +21,9 @@ const mocks = {
   Weather: () => ({
     icon: (casual as any).icon,
     summary: casual.sentence
+  }),
+  Day: () => ({
+    activities: () => new MockList([0, 5])
   })
 };
 

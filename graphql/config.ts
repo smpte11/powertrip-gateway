@@ -4,6 +4,7 @@ import { match } from "./fp";
 export interface Configurable {
   host: string;
   mocks: any;
+  mockEntireSchema: boolean;
   port: number;
   weatherChannelUrl: string;
   dayServiceUrl: string;
@@ -28,6 +29,10 @@ class Config implements Configurable {
 
   public get mocks() {
     return process.env.USE_MOCKS ? mocks : undefined;
+  }
+
+  public get mockEntireSchema() {
+    return process.env.MOCK_WHOLE_SCHEMA === "true";
   }
 }
 
