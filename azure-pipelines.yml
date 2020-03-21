@@ -43,6 +43,7 @@ stages:
       displayName: 'Build extensions'
 
     - script: |
+        npm install -g azure-functions-core-tools@3
         npm install
         npm run build:production --if-present
       displayName: 'Prepare binaries'
