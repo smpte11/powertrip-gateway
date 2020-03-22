@@ -15,7 +15,7 @@ Container.set({ id: "config", factory: buildConfig });
 const schema = buildSchemaSync({
   resolvers: [DayResolver],
   container: Container,
-  emitSchemaFile: path.resolve(__dirname, "schema.gql")
+  emitSchemaFile: (Container.get("config") as Configurable).emitSchema
 });
 
 const server = new ApolloServer({

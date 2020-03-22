@@ -1,9 +1,11 @@
 import mocks from "./day/mocks";
 import { match } from "./fp";
+import path from "path";
 
 export interface Configurable {
   mocks: any;
   mockEntireSchema: boolean;
+  emitSchema: boolean;
   weatherChannelUrl: string;
   dayServiceUrl: string;
 }
@@ -29,9 +31,17 @@ class Config implements Configurable {
   public get mockEntireSchema() {
     return process.env.MOCK_WHOLE_SCHEMA === "true";
   }
+
+  public get emitSchema() {
+    return true;
+  }
 }
 
 class ProdConfig extends Config {
+  public get emitSchema() {
+    return false;
+  }
+
   public get weatherChannelUrl(): string {
     return `https://powertrip-weather-channel.azurewebsites.net/api/v1`;
   }
