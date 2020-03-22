@@ -2,10 +2,8 @@ import mocks from "./day/mocks";
 import { match } from "./fp";
 
 export interface Configurable {
-  host: string;
   mocks: any;
   mockEntireSchema: boolean;
-  port: number;
   weatherChannelUrl: string;
   dayServiceUrl: string;
 }
@@ -16,11 +14,8 @@ enum ENVIRONMENTS {
 }
 
 class Config implements Configurable {
-  host: string = "http://localhost";
-  port: number = 4000;
-
   public get weatherChannelUrl(): string {
-    return `${this.host}:7073`;
+    return `http://localhost:7073/api/v1`;
   }
 
   public get dayServiceUrl(): string {
@@ -36,7 +31,11 @@ class Config implements Configurable {
   }
 }
 
-class ProdConfig extends Config {}
+class ProdConfig extends Config {
+  public get weatherChannelUrl(): string {
+    return `https://powertrip-weather-channel.azurewebsites.net/api/v1`;
+  }
+}
 
 function buildConfig(): Config {
   const env = process.env.NODE_ENV;

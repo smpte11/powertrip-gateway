@@ -9,10 +9,8 @@ import { WeatherRepository, DayRepository } from "./repositories";
 @Service()
 @Resolver(of => Day)
 class DayResolver {
-  private readonly config!: Configurable;
-
-  dayRepository: DayRepository;
-  weatherRepository: WeatherRepository;
+  private readonly dayRepository: DayRepository;
+  private readonly weatherRepository: WeatherRepository;
 
   constructor(@Inject("config") config: Configurable) {
     this.dayRepository = new DayRepository({
@@ -22,7 +20,7 @@ class DayResolver {
 
     this.weatherRepository = new WeatherRepository({
       baseUrl: config.weatherChannelUrl,
-      resource: "api/powertrip-weather-channel"
+      resource: "weather"
     });
   }
 
