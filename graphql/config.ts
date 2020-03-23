@@ -1,11 +1,11 @@
 import mocks from "./day/mocks";
 import { match } from "./fp";
-import path from "path";
 
 export interface Configurable {
   mocks: any;
   mockEntireSchema: boolean;
   emitSchema: boolean;
+  weatherCode?: string;
   weatherChannelUrl: string;
   dayServiceUrl: string;
 }
@@ -16,13 +16,13 @@ enum ENVIRONMENTS {
 }
 
 class Config implements Configurable {
-  public get weatherChannelUrl(): string {
-    return `http://localhost:7074/api/v1`;
-  }
+  public weatherChannelUrl = "http://localhost:7074/api/v1";
 
-  public get dayServiceUrl(): string {
-    return "http://day.trip/api/v1/";
-  }
+  public weatherCode = process.env.WEATHER_CODE;
+
+  public dayServiceUrl = "http://day.trip/api/v1/";
+
+  public emitSchema = true;
 
   public get mocks() {
     return process.env.USE_MOCKS ? mocks : undefined;
@@ -31,20 +31,15 @@ class Config implements Configurable {
   public get mockEntireSchema() {
     return process.env.MOCK_WHOLE_SCHEMA === "true";
   }
-
-  public get emitSchema() {
-    return true;
-  }
 }
 
 class ProdConfig extends Config {
-  public get emitSchema() {
-    return false;
-  }
+  public weatherChannelUrl =
+    "https://powertrip-weather-channel.azurewebsites.net/api/v1/";
 
-  public get weatherChannelUrl(): string {
-    return `https://powertrip-weather-channel.azurewebsites.net/api/v1/`;
-  }
+  public weatherCode = process.env.WEATHER_CODE;
+
+  public emitSchema = false;
 }
 
 function buildConfig(): Config {

@@ -1,4 +1,5 @@
 import * as rm from "typed-rest-client/RestClient";
+import { IRequestOptions } from "typed-rest-client/Interfaces";
 
 interface Findable<T> {
   findAll(): Promise<T[] | null>;
@@ -21,6 +22,7 @@ interface Deletable {
 type AsyncRepositoryOpts = {
   resource: string;
   baseUrl: string;
+  extraConfig?: IRequestOptions;
 };
 
 export abstract class AsyncRepository<T> implements Findable<T> {
@@ -28,8 +30,13 @@ export abstract class AsyncRepository<T> implements Findable<T> {
   protected client: rm.RestClient;
 
   constructor(options: AsyncRepositoryOpts) {
-    const { baseUrl, resource } = options;
-    this.client = new rm.RestClient("powertrip-gateway", baseUrl);
+    const { baseUrl, resource, extraConfig } = options;
+    this.client = new rm.RestClient(
+      "powertrip-gateway",
+      baseUrl,
+      [],
+      extraConfig
+    );
     this.resource = resource;
   }
 

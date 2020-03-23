@@ -14,7 +14,12 @@ class WeatherResolver {
   constructor(@Inject("config") config: Configurable) {
     this.weatherRepository = new WeatherRepository({
       baseUrl: config.weatherChannelUrl,
-      resource: "weather"
+      resource: "weather",
+      extraConfig: {
+        headers: {
+          "x-functions-key": config?.weatherCode
+        }
+      }
     });
   }
 
