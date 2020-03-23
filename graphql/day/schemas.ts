@@ -1,16 +1,5 @@
 import { ObjectType, Field, Int } from "type-graphql";
-
-@ObjectType({
-  description: "Weather for a given day. Info provided by DarkSky."
-})
-export class Weather implements Weather {
-  @Field(type => String, { description: "The icon for the day's weather" })
-  icon!: string;
-  @Field(type => String, {
-    description: "A short summary of the day's weather"
-  })
-  summary!: string;
-}
+import Weather from "../weather/schemas";
 
 @ObjectType({
   description:
@@ -28,6 +17,12 @@ class Day {
     nullable: true
   })
   activities?: number[];
+
+  @Field(type => Weather, {
+    description: "The weather for a given day",
+    nullable: true
+  })
+  weather?: Weather;
 }
 
 export default Day;

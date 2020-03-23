@@ -8,14 +8,13 @@ import { Container } from "typedi";
 import DayResolver from "./day/resolvers";
 
 import buildConfig, { Configurable } from "./config";
-import path from "path";
+import WeatherResolver from "./weather/resolvers";
 
 Container.set({ id: "config", factory: buildConfig });
 
 const schema = buildSchemaSync({
-  resolvers: [DayResolver],
-  container: Container,
-  emitSchemaFile: (Container.get("config") as Configurable).emitSchema
+  resolvers: [DayResolver, WeatherResolver],
+  container: Container
 });
 
 const server = new ApolloServer({

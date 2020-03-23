@@ -1,23 +1,17 @@
-import { Resolver, Query, FieldResolver, Arg } from "type-graphql";
+import { Resolver, Query, FieldResolver, Arg, Root } from "type-graphql";
 import { Service, Inject } from "typedi";
 
-import Day, { Weather } from "./schemas";
-
+import Day from "./schemas";
+import WeatherRepository from "../weather/repositories";
 import { Configurable } from "../config";
-import { WeatherRepository, DayRepository } from "./repositories";
+import { ApolloError } from "apollo-server-azure-functions";
 
 @Service()
-@Resolver(of => Day)
+@Resolver(() => Day)
 class DayResolver {
-  private readonly dayRepository: DayRepository;
   private readonly weatherRepository: WeatherRepository;
 
   constructor(@Inject("config") config: Configurable) {
-    this.dayRepository = new DayRepository({
-      baseUrl: config.dayServiceUrl,
-      resource: "days"
-    });
-
     this.weatherRepository = new WeatherRepository({
       baseUrl: config.weatherChannelUrl,
       resource: "weather"
@@ -25,19 +19,23 @@ class DayResolver {
   }
 
   @Query(_ => Day)
-  async day() {
-    const response = await this.dayRepository.findById(1);
-    return response;
-  }
+  async day() {}
 
-  @FieldResolver(_ => Weather)
+  @FieldResolver()
   async weather(
     @Arg("lat", { defaultValue: 59.3293 }) lat: number,
-    @Arg("long", { defaultValue: 18.0686 }) long: number
-  ): Promise<Weather | null> {
-    const currentWeather = await this.weatherRepository.findWeather(lat, long);
-    if (!currentWeather) return { icon: "", summary: "" };
-    return currentWeather.currently;
+    @Arg("long", { defaultValue: 18.068 }) long: number,
+    @Root() day: Day // add specific date eventually
+  ) {
+    try {
+      const currentWeather = await this.weatherRepository.findWeather(
+        lat,
+        long
+      );
+      if (!currentWeather) return { icon: "", summary: "" };
+    } catch (error) {
+      throw new ApolloError(error.message);
+    }
   }
 }
 

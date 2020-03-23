@@ -17,11 +17,11 @@ enum ENVIRONMENTS {
 
 class Config implements Configurable {
   public get weatherChannelUrl(): string {
-    return `http://localhost:7073/api/v1`;
+    return `http://localhost:7074/api/v1`;
   }
 
   public get dayServiceUrl(): string {
-    return "http://day.trip/api/v1";
+    return "http://day.trip/api/v1/";
   }
 
   public get mocks() {
@@ -43,7 +43,7 @@ class ProdConfig extends Config {
   }
 
   public get weatherChannelUrl(): string {
-    return `https://powertrip-weather-channel.azurewebsites.net/api/v1`;
+    return `https://powertrip-weather-channel.azurewebsites.net/api/v1/`;
   }
 }
 
