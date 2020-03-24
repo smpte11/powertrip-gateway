@@ -14,7 +14,7 @@ Container.set({ id: "config", factory: buildConfig });
 
 const schema = buildSchemaSync({
   resolvers: [DayResolver, WeatherResolver],
-  container: Container
+  container: Container,
 });
 
 const server = new ApolloServer({
@@ -22,7 +22,7 @@ const server = new ApolloServer({
   schema,
   playground: true,
   mocks: (Container.get("config") as Configurable).mocks,
-  mockEntireSchema: (Container.get("config") as Configurable).mockEntireSchema
+  mockEntireSchema: (Container.get("config") as Configurable).mockEntireSchema,
 });
 
-export default server.createHandler({});
+export default server.createHandler();
