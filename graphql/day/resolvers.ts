@@ -14,23 +14,23 @@ class DayResolver {
   constructor(@Inject("config") config: Configurable) {
     this.weatherRepository = new WeatherRepository({
       baseUrl: config.weatherChannelUrl,
-      resource: "weather"
+      resource: "weather",
     });
   }
 
-  @Query(_ => Day)
+  @Query((_) => Day)
   async day() {}
 
   @FieldResolver()
   async weather(
     @Arg("lat", { defaultValue: 59.3293 }) lat: number,
     @Arg("long", { defaultValue: 18.068 }) long: number,
-    @Root() day: Day // add specific date eventually
+    @Root() day: Day, // add specific date eventually
   ) {
     try {
       const currentWeather = await this.weatherRepository.findWeather(
         lat,
-        long
+        long,
       );
       if (!currentWeather) return { icon: "", summary: "" };
     } catch (error) {

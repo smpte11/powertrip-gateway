@@ -9,11 +9,12 @@ import DayResolver from "./day/resolvers";
 
 import buildConfig, { Configurable } from "./config";
 import WeatherResolver from "./weather/resolvers";
+import TravelResolver from "./travel/resolvers";
 
 Container.set({ id: "config", factory: buildConfig });
 
 const schema = buildSchemaSync({
-  resolvers: [DayResolver, WeatherResolver],
+  resolvers: [DayResolver, TravelResolver, WeatherResolver],
   container: Container,
 });
 
