@@ -7,15 +7,26 @@ import Day from "../day/schemas";
     "A planned travel. Contains a collection of days but also travel-wide information and documents.",
 })
 class Travel {
+  @Field((_) => String, {
+    description: "The name of the trip.",
+    nullable: true,
+  })
+  name?: string;
+
+  @Field((_) => String, {
+    description: "Where the trip takes place. Generally...",
+  })
+  destination: string;
+
   @Field((_) => Date, {
     description: "The starting date of the trip.",
   })
-  from: Date;
+  start: Date;
 
   @Field((_) => Date, {
     description: "The end date of the trip (inclusive).",
   })
-  to: Date;
+  end: Date;
 
   @Field((_) => [Day], {
     description:
