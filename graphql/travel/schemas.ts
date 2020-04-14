@@ -1,4 +1,4 @@
-import { ObjectType, Field } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 
 import Day from "../day/schemas";
 
@@ -7,6 +7,12 @@ import Day from "../day/schemas";
     "A planned travel. Contains a collection of days but also travel-wide information and documents.",
 })
 class Travel {
+  @Field((_) => ID, {
+    description: "The id of the trip.",
+    nullable: true,
+  })
+  id?: string;
+
   @Field((_) => String, {
     description: "The name of the trip.",
     nullable: true,

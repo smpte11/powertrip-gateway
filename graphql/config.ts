@@ -39,7 +39,7 @@ class Config implements Configurable {
   }
 
   public get mockEntireSchema() {
-    return process.env.MOCK_WHOLE_SCHEMA === "true";
+    return process.env.MOCK_RESOLVERS === "true";
   }
 }
 
@@ -57,7 +57,7 @@ function buildConfig(): Config {
   return match(env)
     .on(
       () => env === ENVIRONMENTS.PROD,
-      () => new ProdConfig(),
+      () => new ProdConfig()
     )
     .otherwise(() => new Config());
 }

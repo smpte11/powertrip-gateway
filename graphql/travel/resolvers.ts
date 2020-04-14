@@ -4,6 +4,9 @@ import CreateTravelInput from "./inputs";
 
 @Resolver()
 class TravelResolver {
+  @Query((_) => [Travel])
+  async travels() {}
+
   @Query((_) => Travel)
   async travel() {}
 
@@ -13,6 +16,7 @@ class TravelResolver {
   ): Promise<Travel> {
     return Promise.resolve({
       ...newTravelData,
+      id: Math.floor(Math.random() * 100).toString(),
       days: [{}],
     });
   }
