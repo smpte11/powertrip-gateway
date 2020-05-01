@@ -16,6 +16,7 @@ Container.set({ id: "config", factory: buildConfig });
 const schema = buildSchemaSync({
   resolvers: [DayResolver, TravelResolver, WeatherResolver],
   container: Container,
+  emitSchemaFile: true,
 });
 
 const server = new ApolloServer({

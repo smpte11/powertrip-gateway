@@ -9,6 +9,7 @@ export interface Configurable {
   mockEntireSchema: boolean;
   emitSchema: boolean;
   weatherCode?: string;
+  travelServiceUrl: string;
   weatherChannelUrl: string;
   dayServiceUrl: string;
 }
@@ -19,6 +20,8 @@ enum ENVIRONMENTS {
 }
 
 class Config implements Configurable {
+  public travelServiceUrl = "http://localhost:8081/api/v1";
+
   public weatherChannelUrl = "http://localhost:7074/api/v1";
 
   public weatherCode = process.env.WEATHER_CODE;

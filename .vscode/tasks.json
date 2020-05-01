@@ -2,6 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": []
+    },
+    {
       "type": "func",
       "command": "host start",
       "problemMatcher": "$func-watch",
@@ -25,11 +30,6 @@
       "label": "npm prune",
       "command": "npm prune --production",
       "dependsOn": "npm build",
-      "problemMatcher": []
-    },
-    {
-      "type": "npm",
-      "script": "start",
       "problemMatcher": []
     }
   ]

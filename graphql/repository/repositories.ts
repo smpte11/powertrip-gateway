@@ -8,15 +8,15 @@ interface Findable<T> {
 }
 
 interface Creatable<T> {
-  create(data: {}): T;
+  create(data: {}): Promise<T>;
 }
 
 interface Updatable<T> {
-  update(predicate: {}): T;
+  update(predicate: {}): Promise<T>;
 }
 
 interface Deletable {
-  delete(predicate: {}): boolean;
+  delete(predicate: {}): Promise<unknown>;
 }
 
 type AsyncRepositoryOpts = {
@@ -25,7 +25,7 @@ type AsyncRepositoryOpts = {
   extraConfig?: IRequestOptions;
 };
 
-export abstract class AsyncRepository<T> implements Findable<T> {
+export abstract class AsyncRepository<T> implements Findable<T>, Creatable<T> {
   protected resource: string;
   protected client: rm.RestClient;
 
@@ -38,6 +38,15 @@ export abstract class AsyncRepository<T> implements Findable<T> {
       extraConfig
     );
     this.resource = resource;
+  }
+
+  async create(data: {}) {
+    try {
+      const { result } = await this.client.create<T>(`${this.resource}`, data);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findById(id: number) {
