@@ -13,6 +13,12 @@ input CreateTravelInput {
   end: DateTime!
 }
 
+input CredentialInput {
+  email: String!
+  password: String!
+  displayName: String
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -33,14 +39,15 @@ type Day {
 }
 
 type Mutation {
-  createTravel(travel: CreateTravelInput!): Travel!
+  createTravel(newTravel: CreateTravelInput!): Travel!
+  signup(newUser: CredentialInput!): User!
 }
 
 type Query {
   day: Day!
-  weather(long: Float = 18.068, lat: Float = 59.3293): Weather!
   travels: [Travel!]!
   travel: Travel!
+  weather(long: Float = 18.068, lat: Float = 59.3293): Weather!
 }
 
 """
@@ -61,6 +68,13 @@ type Travel {
 
   """The end date of the trip (inclusive)."""
   end: DateTime!
+}
+
+type User {
+  id: ID
+  email: String!
+  displayName: String!
+  isLogged: Boolean!
 }
 
 """Weather for a given day. Info provided by DarkSky."""

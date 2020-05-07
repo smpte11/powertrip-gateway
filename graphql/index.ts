@@ -6,15 +6,16 @@ import { ApolloServer } from "apollo-server-azure-functions";
 import { Container } from "typedi";
 
 import DayResolver from "./day/resolvers";
+import TravelResolver from "./travel/resolvers";
+import UserResolver from "./user/resolvers";
+import WeatherResolver from "./weather/resolvers";
 
 import buildConfig, { Configurable } from "./config";
-import WeatherResolver from "./weather/resolvers";
-import TravelResolver from "./travel/resolvers";
 
 Container.set({ id: "config", factory: buildConfig });
 
 const schema = buildSchemaSync({
-  resolvers: [DayResolver, TravelResolver, WeatherResolver],
+  resolvers: [DayResolver, TravelResolver, UserResolver, WeatherResolver],
   container: Container,
   emitSchemaFile: true,
 });

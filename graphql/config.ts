@@ -1,6 +1,9 @@
+import * as firebaseAdmin from "firebase-admin";
+
 import dayMocks from "./day/mocks";
 import travelMock from "./travel/mocks";
 import weatherMock from "./weather/mocks";
+import userMock from "./user/mocks";
 
 import { match } from "./fp";
 
@@ -12,6 +15,7 @@ export interface Configurable {
   travelServiceUrl: string;
   weatherChannelUrl: string;
   dayServiceUrl: string;
+  authService: firebaseAdmin.auth.Auth;
 }
 
 enum ENVIRONMENTS {
@@ -20,6 +24,8 @@ enum ENVIRONMENTS {
 }
 
 class Config implements Configurable {
+  public authService: firebaseAdmin.auth.Auth;
+
   public travelServiceUrl = "http://localhost:8081/api/v1";
 
   public weatherChannelUrl = "http://localhost:7074/api/v1";
@@ -30,12 +36,21 @@ class Config implements Configurable {
 
   public emitSchema = true;
 
+  constructor() {
+    const app = firebaseAdmin.initializeApp({
+      credential: firebaseAdmin.credential.applicationDefault(),
+    });
+
+    this.authService = app.auth();
+  }
+
   public get mocks() {
     return process.env.USE_MOCKS
       ? {
           ...dayMocks,
           ...travelMock,
           ...weatherMock,
+          ...userMock,
           DateTime: () => new Date(),
         }
       : undefined;
@@ -53,6 +68,13 @@ class ProdConfig extends Config {
   public weatherCode = process.env.WEATHER_CODE;
 
   public emitSchema = false;
+
+  constructor() {
+    super();
+    // TODO set FIREBASE_CONFIG with json object as value
+    const app = firebaseAdmin.initializeApp();
+    this.authService = app.auth();
+  }
 }
 
 function buildConfig(): Config {

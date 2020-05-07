@@ -27,7 +27,7 @@ class TravelResolver {
 
   @Mutation((_) => Travel)
   async createTravel(
-    @Arg("travel") newTravelData: CreateTravelInput
+    @Arg("newTravel") newTravelData: CreateTravelInput
   ): Promise<Travel> {
     const { start, end, ...rest } = await this.travelRepository.create(
       newTravelData
