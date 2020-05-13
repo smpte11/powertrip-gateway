@@ -1,13 +1,12 @@
 import "reflect-metadata";
 
-import { buildSchemaSync } from "type-graphql";
+import { buildSchemaSync, GraphQLISODateTime } from "type-graphql";
 import { ApolloServer } from "apollo-server-azure-functions";
 
 import { Container } from "typedi";
 
 import DayResolver from "./day/resolvers";
 import TravelResolver from "./travel/resolvers";
-import UserResolver from "./user/resolvers";
 import WeatherResolver from "./weather/resolvers";
 
 import buildConfig, { Configurable } from "./config";
@@ -15,7 +14,7 @@ import buildConfig, { Configurable } from "./config";
 Container.set({ id: "config", factory: buildConfig });
 
 const schema = buildSchemaSync({
-  resolvers: [DayResolver, TravelResolver, UserResolver, WeatherResolver],
+  resolvers: [DayResolver, TravelResolver, WeatherResolver],
   container: Container,
   emitSchemaFile: true,
 });

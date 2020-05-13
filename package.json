@@ -12,15 +12,16 @@
     "test": "jest"
   },
   "dependencies": {
-    "apollo-server": "^2.12.0",
-    "apollo-server-azure-functions": "^2.12.0",
+    "apollo-server": "^2.13.1",
+    "apollo-server-azure-functions": "^2.13.1",
     "casual": "^1.6.2",
+    "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
-    "firebase-admin": "^8.12.0",
-    "graphql": "^14.6.0",
+    "firebase-admin": "^8.12.1",
+    "graphql": "^15.0.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.5",
-    "type-graphql": "^0.17.6",
+    "type-graphql": "^1.0.0-rc.1",
     "typed-rest-client": "^1.7.3",
     "typedi": "^0.8.0"
   },
@@ -30,11 +31,11 @@
     "@types/got": "^9.6.10",
     "@types/graphql": "^14.5.0",
     "@types/jest": "^25.2.1",
-    "@types/node": "^13.13.4",
-    "jest": "^25.5.1",
+    "@types/node": "^14.0.1",
+    "jest": "^26.0.1",
     "nock": "^12.0.3",
     "source-map-support": "^0.5.19",
-    "ts-jest": "^25.4.0",
-    "typescript": "^3.8.3"
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.9.2"
   }
 }

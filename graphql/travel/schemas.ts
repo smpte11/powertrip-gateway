@@ -23,12 +23,12 @@ class Travel {
   })
   destination?: string;
 
-  @Field((_) => Date, {
+  @Field({
     description: "The starting date of the trip.",
   })
   start: Date;
 
-  @Field((_) => Date, {
+  @Field({
     description: "The end date of the trip (inclusive).",
   })
   end: Date;

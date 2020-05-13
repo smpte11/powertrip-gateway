@@ -3,7 +3,6 @@ import * as firebaseAdmin from "firebase-admin";
 import dayMocks from "./day/mocks";
 import travelMock from "./travel/mocks";
 import weatherMock from "./weather/mocks";
-import userMock from "./user/mocks";
 
 import { match } from "./fp";
 
@@ -50,7 +49,6 @@ class Config implements Configurable {
           ...dayMocks,
           ...travelMock,
           ...weatherMock,
-          ...userMock,
           DateTime: () => new Date(),
         }
       : undefined;

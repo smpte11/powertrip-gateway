@@ -7,16 +7,10 @@
 New travel data (E.g. Duration of a trip as date range, destination, etc.)
 """
 input CreateTravelInput {
-  name: String
   destination: String!
-  start: DateTime!
   end: DateTime!
-}
-
-input CredentialInput {
-  email: String!
-  password: String!
-  displayName: String
+  name: String
+  start: DateTime!
 }
 
 """
@@ -28,53 +22,45 @@ scalar DateTime
 Day within a travel. Describes a collection of activities, tasks, notes, etc.
 """
 type Day {
-  """The current date."""
-  date: DateTime
-
   """A list of activities for a given day."""
   activities: [Int!]
 
+  """The current date."""
+  date: DateTime
+
   """The weather for a given day"""
-  weather(long: Float = 18.068, lat: Float = 59.3293): Weather
+  weather(lat: Float = 59.3293, long: Float = 18.068): Weather
 }
 
 type Mutation {
   createTravel(newTravel: CreateTravelInput!): Travel!
-  signup(newUser: CredentialInput!): User!
 }
 
 type Query {
   day: Day!
-  travels: [Travel!]!
   travel: Travel!
-  weather(long: Float = 18.068, lat: Float = 59.3293): Weather!
+  travels: [Travel!]!
+  weather(lat: Float = 59.3293, long: Float = 18.068): Weather!
 }
 
 """
 A planned travel. Contains a collection of days but also travel-wide information and documents.
 """
 type Travel {
+  """Where the trip takes place. Generally..."""
+  destination: String
+
+  """The end date of the trip (inclusive)."""
+  end: DateTime!
+
   """The id of the trip."""
   id: ID
 
   """The name of the trip."""
   name: String
 
-  """Where the trip takes place. Generally..."""
-  destination: String
-
   """The starting date of the trip."""
   start: DateTime!
-
-  """The end date of the trip (inclusive)."""
-  end: DateTime!
-}
-
-type User {
-  id: ID
-  email: String!
-  displayName: String!
-  isLogged: Boolean!
 }
 
 """Weather for a given day. Info provided by DarkSky."""
