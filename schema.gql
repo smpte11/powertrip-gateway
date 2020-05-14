@@ -11,6 +11,7 @@ input CreateTravelInput {
   end: DateTime!
   name: String
   start: DateTime!
+  travellerId: ID!
 }
 
 """
@@ -61,6 +62,9 @@ type Travel {
 
   """The starting date of the trip."""
   start: DateTime!
+
+  """The ID of the traveller who created this trip"""
+  travellerId: ID!
 }
 
 """Weather for a given day. Info provided by DarkSky."""

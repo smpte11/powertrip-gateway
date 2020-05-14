@@ -1,4 +1,4 @@
-import { InputType, Field } from "type-graphql";
+import { InputType, Field, ID } from "type-graphql";
 import Travel from "./schemas";
 
 @InputType({
@@ -6,6 +6,9 @@ import Travel from "./schemas";
     "New travel data (E.g. Duration of a trip as date range, destination, etc.)",
 })
 class CreateTravelInput implements Partial<Travel> {
+  @Field((_) => ID)
+  travellerId: string;
+
   @Field({ nullable: true })
   name?: string;
 

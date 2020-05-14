@@ -11,6 +11,11 @@ class Travel {
   })
   id?: string;
 
+  @Field((_) => ID, {
+    description: "The ID of the traveller who created this trip",
+  })
+  travellerId: string;
+
   @Field((_) => String, {
     description: "The name of the trip.",
     nullable: true,
