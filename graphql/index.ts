@@ -31,8 +31,21 @@ const server = new ApolloServer({
   playground: true,
   mocks: (Container.get("config") as Configurable).mocks,
   mockEntireSchema: (Container.get("config") as Configurable).mockEntireSchema,
-  context: function ({ request }) {
-    return {};
+  context: async function ({ request }) {
+    let user = null;
+    const config = Container.get<Configurable>("config");
+
+    // TODO check empty case
+    const token = request.headers.authorization.split(" ").slice(-1)[0];
+
+    try {
+      // TODO check refresh token
+      user = await config.authService.verifyIdToken(token);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return { user };
   },
 });
 
