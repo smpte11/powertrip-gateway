@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { buildSchemaSync, GraphQLISODateTime } from "type-graphql";
+import { buildSchemaSync } from "type-graphql";
 import { ApolloServer } from "apollo-server-azure-functions";
 
 import { Container } from "typedi";
@@ -19,12 +19,21 @@ const schema = buildSchemaSync({
   emitSchemaFile: true,
 });
 
+type Request = {
+  headers: {
+    [key: string]: string;
+  };
+};
+
 const server = new ApolloServer({
   //@ts-ignore
   schema,
   playground: true,
   mocks: (Container.get("config") as Configurable).mocks,
   mockEntireSchema: (Container.get("config") as Configurable).mockEntireSchema,
+  context: function ({ request }) {
+    return {};
+  },
 });
 
 export default server.createHandler();

@@ -12,8 +12,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "apollo-server": "^2.13.1",
-    "apollo-server-azure-functions": "^2.13.1",
+    "apollo-server": "^2.14.1",
+    "apollo-server-azure-functions": "^2.14.1",
     "casual": "^1.6.2",
     "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
@@ -21,21 +21,21 @@
     "graphql": "^15.0.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.5",
-    "type-graphql": "^1.0.0-rc.1",
+    "type-graphql": "^1.0.0-rc.2",
     "typed-rest-client": "^1.7.3",
     "typedi": "^0.8.0"
   },
   "devDependencies": {
-    "@azure/functions": "^1.2.0",
+    "@azure/functions": "^1.2.2",
     "@playlyfe/gql": "^2.6.2",
-    "@types/got": "^9.6.10",
+    "@types/got": "^9.6.11",
     "@types/graphql": "^14.5.0",
-    "@types/jest": "^25.2.1",
-    "@types/node": "^14.0.1",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^14.0.5",
     "jest": "^26.0.1",
     "nock": "^12.0.3",
     "source-map-support": "^0.5.19",
-    "ts-jest": "^25.5.1",
-    "typescript": "^3.9.2"
+    "ts-jest": "^26.0.0",
+    "typescript": "^3.9.3"
   }
 }
